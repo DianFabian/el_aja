@@ -1,29 +1,29 @@
 import flet as ft
-from datetime import datetime   # ✅ <--- agregado
-
+from datetime import datetime
 
 def ForoPage(page: ft.Page):
     page.title = "Foro Académico - EL AJA"
 
     mensajes = ft.Column(scroll="always", expand=True)
+
     entrada = ft.TextField(
         label="Escribe tu pregunta o comentario",
         expand=True,
         border_color=ft.Colors.BLUE_300,
         focused_border_color=ft.Colors.BLUE_600,
         cursor_color=ft.Colors.BLUE_600,
-        on_submit=None,   # <-- Se rellena después
+        on_submit=None,
     )
 
     def enviar_mensaje(e):
-        if entrada.value.strip():
+        texto = entrada.value.strip()
 
-            # ✅ Obtener hora actual
+        if texto:
             hora = datetime.now().strftime("%H:%M")
 
             mensajes.controls.append(
                 ft.Text(
-                    f"👤 Tú ({hora}): {entrada.value}",
+                    f"👤 Tú ({hora}): {texto}",
                     weight="bold",
                     color=ft.Colors.BLUE_600,
                 )
@@ -38,7 +38,6 @@ def ForoPage(page: ft.Page):
             entrada.value = ""
             page.update()
         else:
-            # ✅ Mostrar alerta si está vacío
             page.snack_bar = ft.SnackBar(
                 ft.Text("⚠️ El mensaje no puede estar vacío"),
                 bgcolor=ft.Colors.RED_200,
@@ -46,7 +45,6 @@ def ForoPage(page: ft.Page):
             )
             page.update()
 
-    # ✅ Asignar ahora que la función ya existe
     entrada.on_submit = enviar_mensaje
 
     return ft.View(
