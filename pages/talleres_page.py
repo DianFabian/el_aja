@@ -38,3 +38,4 @@ def TalleresPage(page: ft.Page):
         ],
         scroll="adaptive",
     )
+
