@@ -1,6 +1,8 @@
 import flet as ft
 
 def TalleresPage(page: ft.Page):
+    mensaje = ft.Text("")  # 🔹 Texto para mostrar mensajes
+
     talleres = ft.DataTable(
         columns=[
             ft.DataColumn(ft.Text("Nombre del Taller")),
@@ -25,17 +27,28 @@ def TalleresPage(page: ft.Page):
                     ]
                 )
             )
+            mensaje.value = "✅ Taller agregado correctamente."
             nombre.value = profesor.value = horas.value = ""
-            page.update()
+        else:
+            mensaje.value = "⚠️ Por favor, completa todos los campos."
+        page.update()
 
     return ft.View(
         "/talleres",
         [
             ft.AppBar(title=ft.Text("Gestión de Talleres"), bgcolor=ft.colors.BLUE_300),
-            ft.Column([nombre, profesor, horas, ft.ElevatedButton("Agregar", on_click=agregar_taller)], spacing=10),
+            ft.Column(
+                [
+                    nombre,
+                    profesor,
+                    horas,
+                    ft.ElevatedButton("Agregar", on_click=agregar_taller),
+                    mensaje,  # 🔹 Mostramos el mensaje aquí
+                ],
+                spacing=10,
+            ),
             talleres,
             ft.ElevatedButton("Regresar", on_click=lambda e: page.go("/home")),
         ],
         scroll="adaptive",
     )
-
